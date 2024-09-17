@@ -53,7 +53,7 @@ app.set('view engine', 'pug'); // .set() es para agregar configuracion. acá ade
 app.set('views', path.join(__dirname, 'views')); //Acá le pasamos las carpetas en donde va a estar los archivos pug
 
 // carpeta publica
-app.use(express.static('public')); //En esta carpeta va a identificar los archivos estaticos
+app.use(express.static(path.join(__dirname, 'public'))); //En esta carpeta va a identificar los archivos estaticos
 
 // Routing
 app.use('/', appRoutes);
