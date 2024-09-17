@@ -1,8 +1,18 @@
 import Sequelize from "sequelize";
 import mysql2 from 'mysql2';
 import dotenv from "dotenv";
+import path from 'path';
 
-dotenv.config({path: '.env'}); //Le tenemos que decir en que parte va encontrar ese archivo de .env
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Convierte el `import.meta.url` en una ruta de archivo
+const __filename = fileURLToPath(import.meta.url);
+
+// Obtén el directorio actual a partir de `__filename`
+const __dirname = dirname(__filename);
+
+dotenv.config({path: path.join(__dirname, '.env')}); //Le tenemos que decir en que parte va encontrar ese archivo de .env
 
 const db = new Sequelize(process.env.BD_NOMBRE, process.env.BD_USER, process.env.BD_PASSWORD, { //toma 4 parametros. Nombre de la base de datos, el usuario, el password y un objeto de configuracion
     // CONFIGURACION DE UNA BASE DE DATOS

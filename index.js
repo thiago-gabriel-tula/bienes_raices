@@ -9,6 +9,16 @@ import propiedadesRoutes from "./routes/propiedadesRoutes.js";
 import appRoutes from "./routes/appRoutes.js";
 import apiRoutes from "./routes/apiRoutes.js";
 import db from "./config/db.js";
+import path from "path";
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Convierte el `import.meta.url` en una ruta de archivo
+const __filename = fileURLToPath(import.meta.url);
+
+// Obtén el directorio actual a partir de `__filename`
+const __dirname = dirname(__filename);
 
 //crear la app (acá llamamos a la funcion extraída)
 const app = express();
@@ -16,7 +26,7 @@ const app = express();
 //Habilitar lectura de datos de formularios (no lee archivos. solo imputs. para leer archivos se requiere la extension de multer)
 app.use(express.urlencoded({extended: true}));
 
-dotenv.config({path: '.env'}) //config es un método proporcionado por la librería dotenv. Este método lee el archivo .env, parsea su contenido y agrega las variables de entorno definidas en ese archivo a process.env. {path: '.env'}: Este objeto es una configuración opcional que se le pasa al método config. La clave path especifica la ruta del archivo .env que debe leerse. En este caso, la ruta es '.env', lo que indica que el archivo .env se encuentra en el directorio actual del proyecto.
+dotenv.config({path: path.join('.env')}) //config es un método proporcionado por la librería dotenv. Este método lee el archivo .env, parsea su contenido y agrega las variables de entorno definidas en ese archivo a process.env. {path: '.env'}: Este objeto es una configuración opcional que se le pasa al método config. La clave path especifica la ruta del archivo .env que debe leerse. En este caso, la ruta es '.env', lo que indica que el archivo .env se encuentra en el directorio actual del proyecto.
 
 // Habilitar cookie-parser
 app.use(cookieParser());
@@ -40,7 +50,7 @@ conectarBD();
 
 // Habilitar Pug
 app.set('view engine', 'pug'); // .set() es para agregar configuracion. acá adentro le ponemos el engine que vamos a utilizar (engine es para escribir html desde el servidor)
-app.set('views', './views'); //Acá le pasamos las carpetas en donde va a estar los archivos pug
+app.set('views', path.join(__dirname, 'views')); //Acá le pasamos las carpetas en donde va a estar los archivos pug
 
 // carpeta publica
 app.use(express.static('public')); //En esta carpeta va a identificar los archivos estaticos
